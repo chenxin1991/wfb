@@ -35,12 +35,15 @@ use dosamigos\tinymce\TinyMce;
     <?= $form->field($model, 'content')->widget(TinyMce::className(), [
         'language' => 'zh_CN',
         'clientOptions' => [
+            'relative_urls' => false,
+            'remove_script_host' => false,
+            'document_base_url' => Yii::$app->params['domain'] ,
             'plugins' => [
                 "advlist autolink lists link charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste autoresize"
+                "insertdatetime media table contextmenu paste autoresize "
             ],
-            'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            'toolbar' => "undo redo | styleselect fontsizeselect| bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
         ]
     ]);?>
     <div class="box-footer">

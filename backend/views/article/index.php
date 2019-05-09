@@ -10,7 +10,12 @@ use yii\grid\GridView;
 $this->title = '文章管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
+<style>
+.select-on-check-all{
+    width:20px;
+    height:20px;
+}
+</style>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -41,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
                 'columns' => [
-                    ["class" => "yii\grid\CheckboxColumn","name" => "id",],
+                    ["class" => "yii\grid\CheckboxColumn","name" => "id",'checkboxOptions'=>['style'=>'width:20px;height:20px;']],
                     'id',
                     'source_id',
                     ['attribute' => 'website.name','label' => '站点'],

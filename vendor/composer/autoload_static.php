@@ -107,6 +107,7 @@ class ComposerStaticInitf9d135eecf39533d0923f9bc34ba5ca9
         ),
         'd' => 
         array (
+            'dosamigos\\tinymce\\' => 18,
             'dmstr\\' => 6,
         ),
         'c' => 
@@ -207,6 +208,10 @@ class ComposerStaticInitf9d135eecf39533d0923f9bc34ba5ca9
         'kartik\\base\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base/src',
+        ),
+        'dosamigos\\tinymce\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-tinymce-widget/src',
         ),
         'dmstr\\' => 
         array (

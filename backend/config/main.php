@@ -12,13 +12,6 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [
-        'redactor' => [ 
-            'class' => 'yii\redactor\RedactorModule', 
-            'uploadUrl' => 'http://wfb.com/uploads',
-            'imageAllowExtensions'=>['jpg','png','gif'] 
-        ], 
-    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',

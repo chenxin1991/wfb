@@ -7,6 +7,7 @@ use backend\models\Product;
 use kartik\select2\Select2;
 use backend\models\LongtailKeywords;
 use backend\models\MainKeywords;
+use dosamigos\tinymce\TinyMce;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Article */
@@ -31,15 +32,17 @@ use backend\models\MainKeywords;
     <?= $form->field($model, 'seo_title')->textInput() ?>
     <?= $form->field($model, 'keywords')->textInput() ?>
     <?= $form->field($model, 'description')->textarea(['rows' => 4]) ?>
-    <?= $form->field($model, 'content')->widget(\yii\redactor\widgets\Redactor::className(), [
+    <?= $form->field($model, 'content')->widget(TinyMce::className(), [
+        'language' => 'zh_CN',
         'clientOptions' => [
-            'imageManagerJson' => ['/redactor/upload/image-json'],
-            'imageUpload' => ['/redactor/upload/image'],
-            'fileUpload' => ['/redactor/upload/file'],
-            'lang' => 'zh_cn',
-            'plugins' => ['clips', 'fontcolor','imagemanager']
+            'plugins' => [
+                "advlist autolink lists link charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste autoresize"
+            ],
+            'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
         ]
-    ])?>
+    ]);?>
     <div class="box-footer">
         <div class="col-sm-4"></div>
         <div class="col-sm-2 col-xs-2"><a href="javascript:history.back();" class="btn btn-default">取消</a></div>

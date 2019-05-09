@@ -24,7 +24,8 @@
         "yiidoc/yii2-redactor": "*",
         "kartik-v/yii2-widget-fileinput": "^1.0",
         "phpoffice/phpspreadsheet": "^1.6",
-        "linslin/yii2-curl": "*"
+        "linslin/yii2-curl": "*",
+        "2amigos/yii2-tinymce-widget": "~1.1"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

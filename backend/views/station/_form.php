@@ -14,9 +14,14 @@ use dosamigos\tinymce\TinyMce;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<?php
+$url=Yii::$app->assetManager->getPublishedUrl('@vendor/2amigos/yii2-tinymce-widget/src/assets');
+$domain=Yii::$app->params['domain'];
+?>
+
 <div class="box-body">
     <?php $form = ActiveForm::begin([
-        'options'=>['class'=>'form-horizontal col-sm-9'],
+        'options'=>['class'=>'form-horizontal'],
         'fieldConfig'=>[
             'template'=>"{label}\n<div class=\"col-sm-11\">{input}\n{hint}\n{error}</div>",
             'labelOptions'=>['class'=>'col-sm-1 control-label'],
@@ -34,17 +39,61 @@ use dosamigos\tinymce\TinyMce;
     <?= $form->field($model, 'description')->textarea(['rows' => 4]) ?>
     <?= $form->field($model, 'content')->widget(TinyMce::className(), [
         'language' => 'zh_CN',
-        'clientOptions' => [
-            'relative_urls' => false,
-            'remove_script_host' => false,
-            'document_base_url' => Yii::$app->params['domain'] ,
-            'plugins' => [
-                "advlist autolink lists link charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste autoresize "
+        'clientOptions' => "{
+            selector: '#article-content',
+            height: 550,
+            language_url:'{$url}',
+            language:'zh_CN',
+            relative_urls:false,
+            remove_script_host:false,
+            document_base_url:'{$domain}',
+            plugins:[
+                'advlist autolink lists link charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste '
             ],
-            'toolbar' => "undo redo | styleselect fontsizeselect| bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-        ]
+            toolbar:'undo redo | styleselect fontsizeselect| bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image fullscreen | keywordsButton websiteButton mainKeywordsButton longtailKeywordsButton',
+            setup:function (editor) {
+                editor.ui.registry.addButton('keywordsButton', {
+                  text: '关键词',
+                  tooltip: '插入关键词',
+                  onAction: function (_) {
+                    editor.insertContent('<strong>{$model->keywords}</strong>');
+                  }
+                });
+                editor.ui.registry.addButton('websiteButton', {
+                    text: '站点名',
+                    tooltip: '插入站点名',
+                    onAction: function (_) {
+                      editor.insertContent('{$model->website->name}');
+                    }
+                });
+                editor.ui.registry.addSplitButton('mainKeywordsButton', {
+                    text: '主关键词',
+                    onAction: function (_) {},  
+                    onItemAction: function (buttonApi, value) {
+                      editor.insertContent(value);
+                    },
+                    fetch: function (callback) {
+                        $.get('/station/main-keywords',{website_id:{$model->website_id}},function (data){
+                            callback(data);
+                        });
+                    }
+                });    
+                editor.ui.registry.addSplitButton('longtailKeywordsButton', {
+                    text: '长尾关键词',
+                    onAction: function (_) {},  
+                    onItemAction: function (buttonApi, value) {
+                      editor.insertContent(value);
+                    },
+                    fetch: function (callback) {
+                        $.get('/station/longtail-keywords',{website_id:{$model->website_id}},function (data){
+                            callback(data);
+                        });
+                    }
+                });                 
+            }
+        }"
     ]);?>
     <div class="box-footer">
         <div class="col-sm-4"></div>
@@ -52,53 +101,5 @@ use dosamigos\tinymce\TinyMce;
         <div class="col-sm-2 col-xs-2"><?= Html::submitButton($model->isNewRecord ? '创建' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?></div>
     </div>
     <?php ActiveForm::end(); ?>
-    <div class="col-sm-3" style="margin-top:500px;">
-        <div style="padding:30px 0px;">
-            <?php
-            echo Select2::widget([
-            'name' => 'kv-type-01',
-            'data' => LongtailKeywords::by_site($model->website_id),
-            'options' => [
-                'placeholder' => '长尾关键词',
-            ],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-            'pluginEvents' => [
-                "change" => 'function() { 
-                    $.get("/longtail-keywords/getname",{id:$(this).val()},function ($data){
-                        $(".p-longtail-keywords").html($data);
-                    });
-                }',
-            ]
-            ]);
-            ?>
-            <p class="redactor-editor p-longtail-keywords"></p>
-        </div>
-        <div style="padding:30px 0px;">
-            <?php
-            echo Select2::widget([
-                'name' => 'kv-type-02',
-                'data' => MainKeywords::by_site($model->website_id),
-                'options' => [
-                    'placeholder' => '主关键词',
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-                'pluginEvents' => [
-                    "change" => 'function() { 
-                        $.get("/main-keywords/getname",{id:$(this).val()},function ($data){
-                            $(".p-main-keywords").html($data);
-                        });
-                    }',
-                ]
-            ]);
-            ?>
-            <p class="redactor-editor p-main-keywords"></p>
-        </div>
-        <div style="padding:30px 0px;"><?php if($model->website) echo $model->website->name;?></div>
-        <div style="padding:30px 0px;"><?php echo $model->keywords;?></div>
-    </div>
 </div>
 

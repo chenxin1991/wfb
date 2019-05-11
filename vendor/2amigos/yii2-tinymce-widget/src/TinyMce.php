@@ -24,6 +24,7 @@ class TinyMce extends InputWidget
      * @var string the language to use. Defaults to null (en).
      */
     public $language;
+    
     /**
      * @var array the options for the TinyMCE JS plugin.
      * Please refer to the TinyMCE JS plugin Web page for possible options.
@@ -56,27 +57,15 @@ class TinyMce extends InputWidget
     {
         $js = [];
         $view = $this->getView();
-
         TinyMceAsset::register($view);
 
-        $id = $this->options['id'];
+        $langFile = "langs/{$this->language}.js";;
+        $langAssetBundle = TinyMceLangAsset::register($view);
+        $langAssetBundle->js[] = $langFile;
+        $js[] = "tinymce.init($this->clientOptions);";
 
-        $this->clientOptions['selector'] = "#$id";
-        // @codeCoverageIgnoreStart
-        if ($this->language !== null && $this->language !== 'en') {
-            $langFile = "langs/{$this->language}.js";
-            $langAssetBundle = TinyMceLangAsset::register($view);
-            $langAssetBundle->js[] = $langFile;
-            $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
-            $this->clientOptions['language'] = "{$this->language}";//Language fix. Without it EN language when add some plugins like codemirror 
-        }
-        // @codeCoverageIgnoreEnd
-
-        $options = Json::encode($this->clientOptions);
-
-        $js[] = "tinymce.init($options);";
         if ($this->triggerSaveOnBeforeValidateForm) {
-            $js[] = "$('#{$id}').parents('form').on('beforeValidate', function() { tinymce.triggerSave(); });";
+            $js[] = "$('#{$this->options['id']}').parents('form').on('beforeValidate', function() { tinymce.triggerSave(); });";
         }
         $view->registerJs(implode("\n", $js));
     }

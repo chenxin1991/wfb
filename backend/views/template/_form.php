@@ -24,3 +24,15 @@ use yii\widgets\ActiveForm;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+
+<?php
+$this->registerJs(
+    '$("#insert-page").on("click",function(){
+        $("#template-content").append("{段落}");
+    });
+
+    $("#insert-image").on("click",function(){
+        $("#template-content").append("{图片}");
+    });'
+);
+?>

@@ -5,6 +5,8 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Article;
 use backend\models\ArticleSearch;
+use backend\models\MainKeywords;
+use backend\models\LongtailKeywords;
 use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -158,4 +160,27 @@ class ArticleController extends Controller
         }
     }
 
+    public function actionMainKeywords($website_id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $result=MainKeywords::find()->select('name')->where(['website_id'=>$website_id])->asArray()->all();
+        foreach($result as $key => $value){
+            $result[$key]['type']='choiceitem';
+            $result[$key]['text']=$value['name'];
+            $result[$key]['value']=$value['name'];
+        }
+        return $result;
+    }
+
+    public function actionLongtailKeywords($website_id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $result=LongtailKeywords::find()->select('name')->where(['website_id'=>$website_id])->asArray()->all();
+        foreach($result as $key => $value){
+            $result[$key]['type']='choiceitem';
+            $result[$key]['text']=$value['name'];
+            $result[$key]['value']=$value['name'];
+        }
+        return $result;
+    }
 }

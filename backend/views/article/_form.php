@@ -17,6 +17,49 @@ use dosamigos\tinymce\TinyMce;
 <?php
 $url=Yii::$app->assetManager->getPublishedUrl('@vendor/2amigos/yii2-tinymce-widget/src/assets');
 $domain=Yii::$app->params['domain'];
+$setup="";
+if (!$model->isNewRecord){
+    $setup="setup:function (editor) {
+        editor.ui.registry.addButton('keywordsButton', {
+          text: '关键词',
+          tooltip: '插入关键词',
+          onAction: function (_) {
+            editor.insertContent('<strong>{$model->keywords}</strong>');
+          }
+        });
+        editor.ui.registry.addButton('websiteButton', {
+            text: '站点名',
+            tooltip: '插入站点名',
+            onAction: function (_) {
+              editor.insertContent('{$model->website->name}');
+            }
+        });
+        editor.ui.registry.addSplitButton('mainKeywordsButton', {
+            text: '主关键词',
+            onAction: function (_) {},  
+            onItemAction: function (buttonApi, value) {
+              editor.insertContent(value);
+            },
+            fetch: function (callback) {
+                $.get('/article/main-keywords',{website_id:{$model->website_id}},function (data){
+                    callback(data);
+                });
+            }
+        });    
+        editor.ui.registry.addSplitButton('longtailKeywordsButton', {
+            text: '长尾关键词',
+            onAction: function (_) {},  
+            onItemAction: function (buttonApi, value) {
+              editor.insertContent(value);
+            },
+            fetch: function (callback) {
+                $.get('/article/longtail-keywords',{website_id:{$model->website_id}},function (data){
+                    callback(data);
+                });
+            }
+        });                 
+    }";
+}
 ?>
 
 <div class="box-body ">
@@ -41,7 +84,7 @@ $domain=Yii::$app->params['domain'];
         'language' => 'zh_CN',
         'clientOptions' => "{
             selector: '#article-content',
-            height: 550,
+            height: 600,
             language_url:'{$url}',
             language:'zh_CN',
             relative_urls:false,
@@ -53,46 +96,7 @@ $domain=Yii::$app->params['domain'];
                 'insertdatetime media table contextmenu paste '
             ],
             toolbar:'undo redo | styleselect fontsizeselect| bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image fullscreen | keywordsButton websiteButton mainKeywordsButton longtailKeywordsButton',
-            setup:function (editor) {
-                editor.ui.registry.addButton('keywordsButton', {
-                  text: '关键词',
-                  tooltip: '插入关键词',
-                  onAction: function (_) {
-                    editor.insertContent('<strong>{$model->keywords}</strong>');
-                  }
-                });
-                editor.ui.registry.addButton('websiteButton', {
-                    text: '站点名',
-                    tooltip: '插入站点名',
-                    onAction: function (_) {
-                      editor.insertContent('{$model->website->name}');
-                    }
-                });
-                editor.ui.registry.addSplitButton('mainKeywordsButton', {
-                    text: '主关键词',
-                    onAction: function (_) {},  
-                    onItemAction: function (buttonApi, value) {
-                      editor.insertContent(value);
-                    },
-                    fetch: function (callback) {
-                        $.get('/article/main-keywords',{website_id:{$model->website_id}},function (data){
-                            callback(data);
-                        });
-                    }
-                });    
-                editor.ui.registry.addSplitButton('longtailKeywordsButton', {
-                    text: '长尾关键词',
-                    onAction: function (_) {},  
-                    onItemAction: function (buttonApi, value) {
-                      editor.insertContent(value);
-                    },
-                    fetch: function (callback) {
-                        $.get('/article/longtail-keywords',{website_id:{$model->website_id}},function (data){
-                            callback(data);
-                        });
-                    }
-                });                 
-            }
+            $setup
         }"
     ]);?>
     <div class="box-footer">

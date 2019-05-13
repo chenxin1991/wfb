@@ -24,7 +24,7 @@ if (!$model->isNewRecord){
           text: '本篇关键词',
           tooltip: '插入关键词',
           onAction: function (_) {
-            editor.insertContent('<strong>{$model->keywords}</strong>');
+            editor.insertContent('{$model->keywords}');
           }
         });
         editor.ui.registry.addButton('websiteButton', {

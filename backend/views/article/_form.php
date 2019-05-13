@@ -21,7 +21,7 @@ $setup="";
 if (!$model->isNewRecord){
     $setup="setup:function (editor) {
         editor.ui.registry.addButton('keywordsButton', {
-          text: '关键词',
+          text: '本篇关键词',
           tooltip: '插入关键词',
           onAction: function (_) {
             editor.insertContent('<strong>{$model->keywords}</strong>');

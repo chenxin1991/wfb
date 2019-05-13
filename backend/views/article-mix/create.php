@@ -20,3 +20,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
     ]) ?>
 </div>
+
+<?php
+$this->registerJs(
+    '    $("#articlemix-product_id").on("change",function(){
+        var website_id=$("#articlemix-website_id").val();
+        if(website_id){
+            $.get("/longtail-keywords/by_site_product",{website_id:website_id,product_id:$(this).val()},function ($data){
+                $("#articlemix-longtail_keywords_ids").html($data);
+            });
+        }
+    });'
+);
+?>

@@ -93,8 +93,7 @@ $this->registerJs(
         }else{
             if(confirm("确定要删除吗？")){
                 $.post("/article/batch-delete", {ids:JSON.stringify(keys)}, function(data){
-                    alert(data.msg);
-                    location.reload();
+
                 });
             }
         }

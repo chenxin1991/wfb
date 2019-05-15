@@ -106,7 +106,7 @@ class Article extends \yii\db\ActiveRecord
             'release' => 0,
             'type' => $type
         ];
-        $url="http://6497.seohost.cn/api/";
+        $url="http://".$website->site_id.".seohost.cn/api/";
         $response = $curl->setOption(CURLOPT_POSTFIELDS,http_build_query($params))->post($url);
         return $response;
     }

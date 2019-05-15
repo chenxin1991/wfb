@@ -80,7 +80,8 @@ $this->registerJs(
     '$(".gridview").on("click", function () {
         var keys = $("#grid").yiiGridView("getSelectedRows");
         $.post("/article/publish", {article_ids:JSON.stringify(keys)}, function(data){
-
+            alert(data.msg);
+            location.reload();
           } );
     });'
 );

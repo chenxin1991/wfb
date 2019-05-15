@@ -127,6 +127,7 @@ class ArticleController extends Controller
                     $result=Article::find()->where(['id'=>$value,'status'=>0])->exists();
                     if($result){
                         $article=Article::findOne($value);
+                        echo $article->content;die;
                         if($article){
                             $response=$article->publish($type);
                             ///if($response['status']==200){

@@ -79,9 +79,12 @@ class ArticleController extends Controller
         if ($model->load(Yii::$app->request->post())) {            
             $br_array=explode("<br />",$model->content);
             $first_paragraph=$br_array[0];
-            $replace_str="<strong>".$model->keywords."</strong>";
-            $br_array[0]=substr_replace($first_paragraph,$replace_str,strpos($first_paragraph,$model->keywords),strlen($model->keywords));
-            $model->content=implode("<br />",$br_array);
+            $flag=strpos($first_paragraph,$model->keywords);
+            if($flag){
+                $replace_str="<strong>".$model->keywords."</strong>";
+                $br_array[0]=substr_replace($first_paragraph,$replace_str,strpos($first_paragraph,$model->keywords),strlen($model->keywords));
+                $model->content=implode("<br />",$br_array);
+            }
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             }

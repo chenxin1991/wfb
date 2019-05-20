@@ -139,11 +139,11 @@ class ArticleController extends Controller
                         $article=Article::findOne($value);
                         if($article){
                             $response=$article->publish($type);
-                            ///if($response['status']==200){
+                            if($response['status']==200){
                                 $article->status=Article::STATUS_PUBLISHED;
                                 $article->save();
                                 $i++;
-                            //}
+                            }
                         }
                     }
                 }

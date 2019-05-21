@@ -134,11 +134,11 @@ class ArticleController extends Controller
             if(is_array($article_ids)){
                 $i=0;
                 foreach($article_ids as $value){
-                    $result=Article::find()->where(['id'=>$value,'status'=>0])->exists();
-                    if($result){
-                        $article=Article::findOne($value);
-                        if($article){
-                            $response=$article->publish($type);
+                    $article=Article::find()->where(['id'=>$value,'status'=>0])->one();
+                    if($article){
+                        $response=$article->publish($type);
+                        $arr_response=json_decode($response, true);
+                        if($arr_response['status']==200){
                             $article->status=Article::STATUS_PUBLISHED;
                             $article->save();
                             $i++;

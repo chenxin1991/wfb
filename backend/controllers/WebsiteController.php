@@ -59,7 +59,7 @@ class WebsiteController extends Controller
             $model->product_ids=serialize($posts['Website']['product_ids']);
             unset($posts['Website']['product_ids']);
             if($model->load($posts) && $model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         }
 
@@ -85,7 +85,7 @@ class WebsiteController extends Controller
             $model->product_ids=serialize($posts['Website']['product_ids']);
             unset($posts['Website']['product_ids']);
             if($model->load($posts) && $model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         }
 

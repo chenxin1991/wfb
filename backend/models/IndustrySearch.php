@@ -65,7 +65,8 @@ class IndustrySearch extends Industry
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
-
+        $query->orderBy('created_at desc');
+        
         return $dataProvider;
     }
 }

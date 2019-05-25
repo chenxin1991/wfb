@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <button class="btn btn-primary" id="insert-image">插入图片</button>
         </div>
         <div class="pull-right">
-            <?=  Html::a('<i class="fa fa-reply"></i>', ['index'], ['class' => 'btn btn-default']) ?>
+            <?=  Html::a('<i class="fa fa-reply"></i>', Yii::$app->request->referrer, ['class' => 'btn btn-default']) ?>
         </div>
     </div>
     <?= $this->render('_form', [

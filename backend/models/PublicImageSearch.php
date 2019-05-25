@@ -66,7 +66,8 @@ class PublicImageSearch extends PublicImage
 
         $query->andFilterWhere(['like', 'url', $this->url])
         ->andWhere(['website_id'=>null]);
-
+        $query->orderBy('created_at desc');
+        
         return $dataProvider;
     }
 }

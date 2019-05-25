@@ -65,7 +65,8 @@ class ConfigSearch extends Config
         ]);
 
         $query->andFilterWhere(['like', 'introduce', $this->introduce]);
-
+        $query->orderBy('created_at desc');
+        
         return $dataProvider;
     }
 }

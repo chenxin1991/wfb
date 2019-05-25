@@ -67,6 +67,7 @@ class WordSearch extends Word
 
         $query->andFilterWhere(['like', 'headname', $this->headname]);
         $query->andFilterWhere(['like', 'endname', $this->endname]);
+        $query->orderBy('created_at desc');
 
         return $dataProvider;
     }

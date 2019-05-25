@@ -67,6 +67,8 @@ class PrivateImageSearch extends PrivateImage
 
         $query->andFilterWhere(['like', 'url', $this->url]);
         $query->andWhere(['not', ['website_id' => null]]);
+        $query->orderBy('created_at desc');
+        
         return $dataProvider;
     }
 }

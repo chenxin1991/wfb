@@ -67,6 +67,7 @@ class EndParagraphSearch extends EndParagraph
         ]);
 
         $query->andFilterWhere(['like', 'content', $this->content]);
+        $query->orderBy('created_at desc');
 
         return $dataProvider;
     }

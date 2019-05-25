@@ -70,6 +70,8 @@ class WebsiteSearch extends Website
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'api_key', $this->api_key]);
 
+        $query->orderBy('created_at desc');
+        
         return $dataProvider;
     }
 }

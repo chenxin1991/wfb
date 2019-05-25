@@ -67,6 +67,8 @@ class ArticleMixSearch extends ArticleMix
             'updated_at' => $this->updated_at,
         ]);
 
+        $query->orderBy('created_at desc');
+        
         return $dataProvider;
     }
 }

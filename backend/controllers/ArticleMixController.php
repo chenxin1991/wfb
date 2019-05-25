@@ -71,7 +71,7 @@ class ArticleMixController extends Controller
                         $model->createArticle($value);
                     }
                     $transaction->commit(); 
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->redirect(['index']);
                 } catch (\Exception $e) {
                     $transaction->rollBack();
                     Yii::$app->session->setFlash('danger', $e->getMessage());
@@ -102,7 +102,7 @@ class ArticleMixController extends Controller
             $model->longtail_keywords_ids=serialize($posts['ArticleMix']['longtail_keywords_ids']);
             unset($posts['ArticleMix']['longtail_keywords_ids']);
             if($model->load($posts) && $model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         }
 

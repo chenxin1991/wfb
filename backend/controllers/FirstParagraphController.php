@@ -76,7 +76,11 @@ class FirstParagraphController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            if(isset($_POST['remember_url']) && !empty($_POST['remember_url'])){
+                return $this->redirect($_POST['remember_url']);
+            }else{
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [

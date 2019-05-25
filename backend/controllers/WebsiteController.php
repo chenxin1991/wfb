@@ -85,7 +85,11 @@ class WebsiteController extends Controller
             $model->product_ids=serialize($posts['Website']['product_ids']);
             unset($posts['Website']['product_ids']);
             if($model->load($posts) && $model->save()){
-                return $this->redirect(['index']);
+                if(isset($_POST['remember_url']) && !empty($_POST['remember_url'])){
+                    return $this->redirect($_POST['remember_url']);
+                }else{
+                    return $this->redirect(['index']);
+                }
             }
         }
 

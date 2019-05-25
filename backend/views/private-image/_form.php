@@ -18,7 +18,7 @@ use backend\models\Product;
             'labelOptions'=>['class'=>'col-sm-2 control-label'],
         ],
     ]); ?>
-
+    <input type="hidden" name="remember_url" value="<?php echo Yii::$app->request->referrer; ?>">
     <?=$form->field($model, 'website_id')->dropDownList(Website::dropdownlist(), 
     ['prompt' => '', 'data-placeholder' => '选择站点', 'class' => 'form-control select2', 'style' => 'width:100%;',
     'onchange'=>'$.get("/product/bysite",{site_id:$(this).val()},function ($data) 

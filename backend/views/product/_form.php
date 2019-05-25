@@ -18,6 +18,7 @@ use backend\models\Industry;
         ],
     ]); ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <input type="hidden" name="remember_url" value="<?php echo Yii::$app->request->referrer; ?>">
     <?=$form->field($model, 'industry_id', ['labelOptions' => ['label' => '行业']])->dropDownList(Industry::dropdownlist(), 
     ['prompt' => '', 'data-placeholder' => '选择行业', 'class' => 'form-control select2', 'style' => 'width:100%;'])?>
     <div class="box-footer">

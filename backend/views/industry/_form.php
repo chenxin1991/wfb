@@ -17,6 +17,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <input type="hidden" name="remember_url" value="<?php echo Yii::$app->request->referrer; ?>">
     <div class="box-footer">
         <div class="col-sm-4"></div>
         <div class="col-sm-2 col-xs-2"><a href="javascript:history.back();" class="btn btn-default">取消</a></div>

@@ -80,6 +80,7 @@ if (!$model->isNewRecord){
     <?= $form->field($model, 'seo_title')->textInput() ?>
     <?= $form->field($model, 'keywords')->textInput() ?>
     <?= $form->field($model, 'description')->textarea(['rows' => 4]) ?>
+    <input type="hidden" name="remember_url" value="<?php echo Yii::$app->request->referrer; ?>">
     <?= $form->field($model, 'content')->widget(TinyMce::className(), [
         'language' => 'zh_CN',
         'clientOptions' => "{

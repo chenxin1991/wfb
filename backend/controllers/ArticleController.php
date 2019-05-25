@@ -86,7 +86,11 @@ class ArticleController extends Controller
                 $model->content=implode("<br />",$br_array);
             }
             if($model->save()){
-                return $this->redirect(['index']);
+                if(isset($_POST['remember_url']) && !empty($_POST['remember_url'])){
+                    return $this->redirect($_POST['remember_url']);
+                }else{
+                    return $this->redirect(['index']);
+                }
             }
         }
 

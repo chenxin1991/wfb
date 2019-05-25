@@ -57,7 +57,7 @@ class ArticleController extends Controller
         $model = new Article();
         $model->type=Article::TYPE_ARTICLE;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -86,7 +86,7 @@ class ArticleController extends Controller
                 $model->content=implode("<br />",$br_array);
             }
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         }
 

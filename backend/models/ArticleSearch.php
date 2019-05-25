@@ -73,6 +73,8 @@ class ArticleSearch extends Article
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'content', $this->content]);
 
+        $query->orderBy('created_at desc');
+
         return $dataProvider;
     }
 }

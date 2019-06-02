@@ -21,7 +21,6 @@ use kartik\select2\Select2;
             'labelOptions'=>['class'=>'col-sm-2 control-label'],
         ],
     ]); ?>
-    <input type="hidden" name="remember_url" value="<?php echo Yii::$app->request->referrer; ?>">
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?=$form->field($model, 'platform_id', ['labelOptions' => ['label' => '平台']])->dropDownList(Platform::dropdownlist(), 
     ['prompt' => '', 'data-placeholder' => '选择平台', 'class' => 'form-control select2', 'style' => 'width:100%;'])?>

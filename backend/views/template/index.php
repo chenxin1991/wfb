@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header'=>'操作',
-                        'template'=>'{view} {update} {delete}',
+                        'template'=>'{update} {delete}',
                         'headerOptions'=>['style'=>'width:200px'],
                         'buttonOptions'=>['class'=>'btn btn-default btn-sm'],
                     ],

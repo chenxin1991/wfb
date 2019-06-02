@@ -24,7 +24,6 @@ $setup="";
             'labelOptions'=>['class'=>'col-sm-2 control-label'],
         ],
     ]); ?>
-    <input type="hidden" name="remember_url" value="<?php echo Yii::$app->request->referrer; ?>">     
     <?= $form->field($model, 'type')->dropdownList([$model::TYPE_ARTICLE=>'文章', $model::TYPE_STATION=>'站内站'], 
     ['prompt'=>'', 'data-placeholder'=>'类型', 'class'=>'form-control select2', 'style'=>'width:100%']) ?>
     <?=$form->field($model, 'product_id')->dropDownList(Product::all(), 
@@ -33,7 +32,7 @@ $setup="";
         'language' => 'zh_CN',
         'clientOptions' => "{
             selector: '#paragraph-content',
-            height: 600,
+            height: 300,
             language_url:'{$url}',
             language:'zh_CN',
             relative_urls:false,

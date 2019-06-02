@@ -17,7 +17,6 @@ use backend\models\Product;
             'labelOptions'=>['class'=>'col-sm-2 control-label'],
         ],
     ]); ?>
-    <input type="hidden" name="remember_url" value="<?php echo Yii::$app->request->referrer; ?>">
     <?=$form->field($model, 'product_id', ['labelOptions' => ['label' => '产品']])->dropDownList(Product::all(), 
     ['prompt' => '', 'data-placeholder' => '选择产品', 'class' => 'form-control select2', 'style' => 'width:100%;'])?>
     <?= $form->field($model, 'headname')->textInput(['maxlength' => true]) ?>

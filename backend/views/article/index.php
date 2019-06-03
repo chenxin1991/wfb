@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['attribute' => 'status', 'value' => function($model){
                         switch($model->status){
                             case $model::STATUS_ACTIVE:return '未修改';break;
-                            case $model::STATUS_MODIFIED:return '已修改';break;
+                            case $model::STATUS_MODIFIED:return '已修改未发布';break;
                             case $model::STATUS_PUBLISHED:return '已发布';break;
                         }
                     }],

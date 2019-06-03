@@ -24,7 +24,7 @@ use linslin\yii2\curl;
  */
 class Article extends \yii\db\ActiveRecord
 {
-    const STATUS_ACTIVE = 0;//未发布
+    const STATUS_ACTIVE = 0;//未修改
     const STATUS_PUBLISHED = 1;//已发布
     const STATUS_MODIFIED=2;//已修改
     const TYPE_ARTICLE = 1;//文章

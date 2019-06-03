@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
         </div>
         <div class="pull-right">
-            <?= Html::a('<i class="fa fa-reply"></i>', Yii::$app->request->referrer, ['class' => 'btn btn-default']) ?>
+            <?= Html::a('<i class="fa fa-reply"></i>', ['index'], ['class' => 'btn btn-default']) ?>
         </div>
     </div>
     <div class="box-body no-padding">

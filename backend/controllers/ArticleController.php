@@ -24,8 +24,8 @@ class ArticleController extends Controller
     public function actionIndex()
     {   
         $searchModel = new ArticleSearch();
-        $searchModel->type=$searchModel::TYPE_ARTICLE;
-
+        $searchModel->type=Article::TYPE_ARTICLE;
+        $searchModel->status=Article::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -85,12 +85,9 @@ class ArticleController extends Controller
                 $br_array[0]=substr_replace($first_paragraph,$replace_str,strpos($first_paragraph,$model->keywords),strlen($model->keywords));
                 $model->content=implode("<br />",$br_array);
             }
+            $model->status=Article::STATUS_MODIFIED;
             if($model->save()){
-                if(isset($_POST['remember_url']) && !empty($_POST['remember_url'])){
-                    return $this->redirect($_POST['remember_url']);
-                }else{
-                    return $this->redirect(['index']);
-                }
+                return $this->redirect(['index']);
             }
         }
 

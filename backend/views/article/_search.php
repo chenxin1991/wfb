@@ -29,7 +29,7 @@ use backend\models\Product;
         <?= $form->field($model, 'product_id')->dropDownList(Product::bysite($model->website_id),
         ['prompt'=>'','data-placeholder'=>'产品','class'=>'form-control select2','style'=>'width:200px;']) ?>
         <?= $form->field($model, 'title')->textInput(['placeholder'=>'标题']) ?>
-        <?= $form->field($model, 'status')->dropdownList([$model::STATUS_ACTIVE=>'正常', $model::STATUS_PUBLISHED=>'已发布'], 
+        <?= $form->field($model, 'status')->dropdownList([$model::STATUS_ACTIVE=>'未修改', $model::STATUS_MODIFIED=>'已修改',$model::STATUS_PUBLISHED=>'已发布'], 
         ['prompt'=>'', 'data-placeholder'=>'状态', 'class'=>'form-control select2', 'style'=>'width:100px;']) ?>
         <div class="form-group">
             <?= Html::submitButton('<i class="fa fa-search"></i>', ['class' => 'btn btn-default']) ?>

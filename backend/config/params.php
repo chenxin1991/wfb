@@ -18,7 +18,7 @@ return [
                 'multiple' => false,
             ],
             'fileSizeLimit'=>500 * 1024 * 1024,//所有文件上传的大小限制,单位字节
-            'fileSingleSizeLimit'=>2 * 1024 * 1024,//单张图片上传限制大小，单位字节    
+            'fileSingleSizeLimit'=>10 * 1024 * 1024,//单张图片上传限制大小，单位字节    
             'fileNumLimit'=>20,//文件上传数量限制
             'threads'=>1//上传并发数。允许同时最大上传进程数,为了保证文件上传顺序
         ],

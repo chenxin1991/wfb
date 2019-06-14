@@ -178,12 +178,7 @@ class MainKeywordsController extends Controller
                         if($index < 2) continue;
                         if(empty($row[0])) continue;
                         $attrs = array_combine($data[1], $row);
-                        //查询是否存在
-                        $main_keywords=MainKeywords::findOne(['name'=>$attrs['name']]);
-                        if($main_keywords != null) {
-                            $errors[] = "第{$index}行数据“{$attrs['name']}”已存在，请删除后重试；";
-                            continue;
-                        }
+
                         // 查询站点
                         $website = Website::findOne(['name'=>trim($attrs['website'])]);
                         if($website === null){
@@ -191,7 +186,14 @@ class MainKeywordsController extends Controller
                             continue;
                         }
                         $attrs['website_id']=$website->id;
-                    
+                        
+                        //查询是否存在
+                        $main_keywords=MainKeywords::findOne(['name'=>$attrs['name'],'website_id'=>$attrs['website_id']]);
+                        if($main_keywords != null) {
+                            $errors[] = "第{$index}行数据“{$attrs['name']}”已存在，请删除后重试；";
+                            continue;
+                        }
+
                         $valid_data[] = $attrs;
                     }
                     if(!empty($errors))

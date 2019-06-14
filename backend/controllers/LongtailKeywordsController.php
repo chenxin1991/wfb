@@ -197,12 +197,6 @@ class LongtailKeywordsController extends Controller
                         if($index < 2) continue;
                         if(empty($row[0])) continue;
                         $attrs = array_combine($data[1], $row);
-                        //查询是否存在
-                        $longtail_keywords=LongtailKeywords::findOne(['name'=>$attrs['name']]);
-                        if($longtail_keywords != null) {
-                            $errors[] = "第{$index}行数据“{$attrs['name']}”已存在，请删除后重试；";
-                            continue;
-                        }
                         // 查询站点
                         $website = Website::findOne(['name'=>trim($attrs['website'])]);
                         if($website === null){
@@ -221,7 +215,15 @@ class LongtailKeywordsController extends Controller
                                 continue;
                             }
                         }
-                        $attrs['product_id']=$product->id;                        
+                        $attrs['product_id']=$product->id;             
+                        
+                        //查询是否存在
+                        $longtail_keywords=LongtailKeywords::findOne(['name'=>$attrs['name'],'website_id'=>$attrs['website_id'],'product_id'=>$attrs['product_id']]);
+                        if($longtail_keywords != null) {
+                            $errors[] = "第{$index}行数据“{$attrs['name']}”已存在，请删除后重试；";
+                            continue;
+                        }
+
                         $valid_data[] = $attrs;
                     }
                     if(!empty($errors))

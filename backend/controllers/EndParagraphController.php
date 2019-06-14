@@ -178,12 +178,6 @@ class EndParagraphController extends Controller
                             $errors[] =  '第'.($index)."行存在错误：{$attrs['typename']}类型不存在";
                             continue;
                         }
-                        // 查询段落是否存在
-                        $end_paragraph=EndParagraph::findOne(['content'=>$attrs['content']]);
-                        if($end_paragraph != null) {
-                            $errors[] = "第{$index}行数据已存在，请删除后重试；";
-                            continue;
-                        }
                         // 查询产品
                         $product = Product::findOne(['name'=>trim($attrs['product'])]);
                         if($product === null){
@@ -191,6 +185,14 @@ class EndParagraphController extends Controller
                             continue;
                         }
                         $attrs['product_id']=$product->id;
+                        // 查询段落是否存在
+                        $end_paragraph=EndParagraph::findOne(['content'=>$attrs['content'],'product_id'=>$attrs['product_id']]);
+                        if($end_paragraph != null) {
+                            $errors[] = "第{$index}行数据已存在，请删除后重试；";
+                            continue;
+                        }
+
+
                         $valid_data[] = $attrs;
                     }
                     if(!empty($errors))

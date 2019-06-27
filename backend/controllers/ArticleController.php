@@ -135,7 +135,7 @@ class ArticleController extends Controller
             if(is_array($article_ids)){
                 $i=0;
                 foreach($article_ids as $value){
-                    $article=Article::find()->where(['id'=>$value,'status'=>0])->one();
+                    $article=Article::find()->where(['id'=>$value,'status'=>Article::STATUS_MODIFIED])->one();
                     if($article){
                         $response=$article->publish($type);
                         $arr_response=json_decode($response, true);
@@ -146,7 +146,7 @@ class ArticleController extends Controller
                         }
                     }
                 }
-                return ['code'=>'200','msg'=>'发布成功'.$arr_response['status'].','.$i.'条'];
+                return ['code'=>'200','msg'=>'发布成功'.$i.'条'];
             }else{
                 return ['code'=>'-1','msg'=>'缺少参数'];
             }

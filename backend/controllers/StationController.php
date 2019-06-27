@@ -5,6 +5,8 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Article;
 use backend\models\ArticleSearch;
+use backend\models\MainKeywords;
+use backend\models\LongtailKeywords;
 use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,7 +25,7 @@ class StationController extends Controller
     {   
         $searchModel = new ArticleSearch();
         $searchModel->type=Article::TYPE_STATION;
-
+        $searchModel->status=Article::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -84,8 +86,9 @@ class StationController extends Controller
                 $br_array[0]=substr_replace($first_paragraph,$replace_str,strpos($first_paragraph,$model->keywords),strlen($model->keywords));
                 $model->content=implode("<br />",$br_array);
             }
+            $model->status=Article::STATUS_MODIFIED;
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         }
 
@@ -133,16 +136,14 @@ class StationController extends Controller
             if(is_array($article_ids)){
                 $i=0;
                 foreach($article_ids as $value){
-                    $result=Article::find()->where(['id'=>$value,'status'=>0])->exists();
-                    if($result){
-                        $article=Article::findOne($value);
-                        if($article){
-                            $response=$article->publish($type);
-                            ///if($response['status']==200){
-                                $article->status=Article::STATUS_PUBLISHED;
-                                $article->save();
-                                $i++;
-                            //}
+                    $result=Article::find()->where(['id'=>$value,'status'=>0])->one();
+                    if($article){
+                        $response=$article->publish($type);
+                        $arr_response=json_decode($response, true);
+                        if($response['status']==200){
+                            $article->status=Article::STATUS_PUBLISHED;
+                            $article->save();
+                            $i++;
                         }
                     }
                 }

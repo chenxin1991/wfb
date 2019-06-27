@@ -146,7 +146,7 @@ class ArticleController extends Controller
                         }
                     }
                 }
-                return ['code'=>'200','msg'=>'发布成功'.$i.'条'];
+                return ['code'=>'200','msg'=>'发布成功'.$arr_response['status'].','.$i.'条'];
             }else{
                 return ['code'=>'-1','msg'=>'缺少参数'];
             }

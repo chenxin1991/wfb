@@ -75,8 +75,10 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $title = $model->title;
-        $keywords = $model->keywords;
+        $title = "title=\"".$model->title."\"";
+        $title_alt = "alt=\"".$model->title."\"";
+        $keywords = "title=\"".$model->keywords."\"";
+        $keywords_alt = "alt=\"".$model->keywords."\"";
 
         if ($model->load(Yii::$app->request->post())) {
             /**
@@ -91,11 +93,13 @@ class ArticleController extends Controller
                 $model->content=implode("<br />",$br_array);
             }
             /**
-             * 更新文章内容里面的标题和关键词
+             * 更新文章内容里面图片的标题和关键词
              */
-            $model->content=str_replace($title,$model->title,$model->content);
-            $model->content=str_replace($keywords,$model->keywords,$model->content);
-            
+            $model->content=str_replace($title,"title=\"".$model->title."\"",$model->content);
+            $model->content=str_replace($title_alt,"alt=\"".$model->title."\"",$model->content);
+            $model->content=str_replace($keywords,"title=\"".$model->keywords."\"",$model->content);
+            $model->content=str_replace($keywords_alt,"alt=\"".$model->keywords."\"",$model->content);
+
             $model->status=Article::STATUS_MODIFIED;
             if($model->save()){
                 return $this->redirect(['index']);

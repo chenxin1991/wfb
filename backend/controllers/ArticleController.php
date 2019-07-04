@@ -75,8 +75,13 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $title = $model->title;
+        $keywords = $model->keywords;
 
-        if ($model->load(Yii::$app->request->post())) {            
+        if ($model->load(Yii::$app->request->post())) {
+            /**
+             * 将首段的关键词加粗
+             */            
             $br_array=explode("<br />",$model->content);
             $first_paragraph=$br_array[0];
             $flag=strpos($first_paragraph,$model->keywords);
@@ -85,6 +90,12 @@ class ArticleController extends Controller
                 $br_array[0]=substr_replace($first_paragraph,$replace_str,strpos($first_paragraph,$model->keywords),strlen($model->keywords));
                 $model->content=implode("<br />",$br_array);
             }
+            /**
+             * 更新文章内容里面的标题和关键词
+             */
+            $model->content=str_replace($title,$model->title,$model->content);
+            $model->content=str_replace($keywords,$model->keywords,$model->content);
+            
             $model->status=Article::STATUS_MODIFIED;
             if($model->save()){
                 return $this->redirect(['index']);
